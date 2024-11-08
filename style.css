@@ -19,5 +19,57 @@ nav ul {
 }
 
 nav li {
-    
+    display: inline-block;
+    margin: 0;
+}
+
+nav a {
+    text-decoration: none;
+    color: #fff
+}
+
+#main-content {
+    padding: 2rem;
+}
+
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    justify-content: center;
+}
+
+.card {
+    border: 1px solid #ddd;
+    padding: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+.card h3 {
+    margin-top: 0;
+}
+
+.card p {
+    margin-bottom: 1rem;
+}
+
+.botton-conrainer {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.load-more-button,
+.hide-button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: #fff;
+    cursor: pointer;
+}
+
+.hide-button {
+    background-color: #f44336;
 }
