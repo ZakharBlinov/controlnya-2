@@ -16,13 +16,18 @@
         const apiUrl = 'https://api.escuelajs.co/api/v1/users';
         let currentPage = 0;
         const limit = 4;
-        let totalLoaded = 0;
+        let totalItems = 0;
 
         function loadUsers() {
             fetch(`${apiUrl}?offset=${currentPage * limit}&limit=${limit}`)
                 .then(response => response.json())
                 .then(data => {
                     const container = document.getElementById('user-container');
+
+                    if (currentPage === 0) {
+                        totalItems = data.length;
+                    }
+
                     data.forEach(user => {
                         const card = document.createElement('div');
                         card.className = 'card';
@@ -32,14 +37,13 @@
                         `;
                         container.appendChild(card);
                     });
-                    currentPage++;
-                    totalLoaded += data.length;
 
-                    if (totalLoaded > limit) {
-                        document.getElementById('hide-button').style.display = 'block';
-                    }
-                    if (data.length < limit) {
+                    currentPage++;
+                    loadedItems += data.length;
+
+                    if (loadedItems >= totalItems) {
                         document.getElementById('load-more').style.display = 'none';
+                        document.getElementById('hide-button').style.display = 'block';
                     }
                 });
         }
@@ -52,8 +56,12 @@
                     card.style.display = 'none';
                 }
             });
+
+            loadedItems = 4;
+            currentPage = 0;
+
             document.getElementById('hide-button').style.display = 'none';
-            document.getElementById('load-more').style.display = 'block';
+            document.getElementById('load-more').style.display = 'block'; 
         });
 
         loadUsers();
