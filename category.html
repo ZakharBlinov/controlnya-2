@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categories</title>
+    <link rel="stylesheet" href="s.css">
+</head>
+<body>
+    <h1>Categories</h1>
+    <div id="category-container"></div>
+    <button id="load-more">Ещё надо</button>
+    <button id="hide-button" style="display: none;">Нафик</button>
+    <script src="i.js"></script>
+    <script>
+        const apiUrl = 'https://api.escuelajs.co/api/v1/categories';
+        let currentPage = 0;
+        const limit = 4;
+        let totalLoaded = 0;
+
+        function loadCategories() {
+            fetch(`${apiUrl}?offset=${currentPage * limit}&limit=${limit}`)
+                .then(response => response.json())
+                .then(data => {
+                    const container = document.getElementById('category-container');
+                    data.forEach(category => {
+                        const card = document.createElement('div');
+                        card.className = 'card';
+                        card.innerHTML = `
+                            <img src="${category.image}" alt="${category.name}">
+                            <h3>${category.name}</h3>
+                        `;
+                        container.appendChild(card);
+                    });
+                    currentPage++;
+                    totalLoaded += data.length;
+
+                    if (totalLoaded > limit) {
+                        document.getElementById('hide-button').style.display = 'block';
+                    }
+                    if (data.length < limit) {
+                        document.getElementById('load-more').style.display = 'none';
+                    }
+                });
+        }
+
+        document.getElementById('load-more').addEventListener('click', loadCategories);
+        document.getElementById('hide-button').addEventListener('click', () => {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                if (index >= 4) {
+                    card.style.display = 'none';
+                }
+            });
+            document.getElementById('hide-button').style.display = 'none';
+            document.getElementById('load-more').style.display = 'block';
+        });
+
+        loadCategories();
+    </script>
+</body>
+</html>

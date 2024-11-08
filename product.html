@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+    <link rel="stylesheet" href="s.css">
+</head>
+<body>
+    <h1>Products</h1>
+    <div id="product-container"></div>
+    <button id="load-more">Показать еще</button>
+    <button id="hide-button" style="display: none;">Скрыть</button>
+    <script src="i.js"></script>
+    <script>
+        const apiUrl = 'https://api.escuelajs.co/api/v1/products';
+        let currentPage = 0;
+        const limit = 4;
+        let totalLoaded = 0;
+
+        function loadProducts() {
+            fetch(`${apiUrl}?offset=${currentPage * limit}&limit=${limit}`)
+                .then(response => response.json())
+                .then(data => {
+                    const container = document.getElementById('product-container');
+                    data.forEach(product => {
+                        const card = document.createElement('div');
+                        card.className = 'card';
+                        card.innerHTML = `
+                            <img src="${product.images[0]}" alt="${product.title}">
+                            <h3>${product.title}</h3>
+                            <p>$${product.price}</p>
+                        `;
+                        container.appendChild(card);
+                    });
+                    currentPage++;
+                    totalLoaded += data.length;
+
+                    // Show or hide buttons based on the total loaded items
+                    if (totalLoaded > limit) {
+                        document.getElementById('hide-button').style.display = 'block';
+                    }
+                    if (data.length < limit) {
+                        document.getElementById('load-more').style.display = 'none';
+                    }
+                });
+        }
+
+        document.getElementById('load-more').addEventListener('click', loadProducts);
+        document.getElementById('hide-button').addEventListener('click', () => {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                if (index >= 4) {
+                    card.style.display = 'none';
+                }
+            });
+            document.getElementById('hide-button').style.display = 'none';
+            document.getElementById('load-more').style.display = 'block';
+        });
+
+        loadProducts();
+    </script>
+</body>
+</html>
