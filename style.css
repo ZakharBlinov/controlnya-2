@@ -2,7 +2,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 20px;
-    background-color: #dadada;
+    background-color: #ffff;
 }
 
 h1 {
@@ -20,7 +20,7 @@ nav a:hover {
 }
 
 .card {
-    background: #dadada;
+    background: #ffff;
     border: 1px solid #742aff;
     border-radius: 5px;
     padding: 10px;
@@ -30,7 +30,7 @@ nav a:hover {
 
 button {
     padding: 10px 15px;
-    background-color: #dadada;
+    background-color: #ffff;
     color: #5900ff;
     border: none;
     border-radius: 5px;
