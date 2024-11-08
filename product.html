@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products</title>
-    <link rel="stylesheet" href="s.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <h1>Products</h1>
@@ -16,19 +16,13 @@
         const apiUrl = 'https://api.escuelajs.co/api/v1/products';
         let currentPage = 0;
         const limit = 4;
-        let totalItems = 0;
-        let loadedItems = 0;
+        let totalLoaded = 0;
 
         function loadProducts() {
             fetch(`${apiUrl}?offset=${currentPage * limit}&limit=${limit}`)
                 .then(response => response.json())
                 .then(data => {
                     const container = document.getElementById('product-container');
-
-                    if (currentPage === 0) {
-                        totalItems = data.total;
-                    }
-
                     data.forEach(product => {
                         const card = document.createElement('div');
                         card.className = 'card';
@@ -39,13 +33,14 @@
                         `;
                         container.appendChild(card);
                     });
-
                     currentPage++;
-                    loadedItems += data.length;
+                    totalLoaded += data.length;
 
-                    if (loadedItems >= totalItems) {
-                        document.getElementById('load-more').style.display = 'none';
+                    if (totalLoaded > limit) {
                         document.getElementById('hide-button').style.display = 'block';
+                    }
+                    if (data.length < limit) {
+                        document.getElementById('load-more').style.display = 'none';
                     }
                 });
         }
@@ -58,12 +53,8 @@
                     card.style.display = 'none';
                 }
             });
-
-            loadedItems = 4;
-            currentPage = 0;
-
             document.getElementById('hide-button').style.display = 'none';
-            document.getElementById('load-more').style.display = 'block'; 
+            document.getElementById('load-more').style.display = 'block';
         });
 
         loadProducts();

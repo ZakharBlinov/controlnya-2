@@ -1,15 +1,42 @@
 body {
     font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #dadada;
 }
-nav {
-    margin: 20px;
+
+h1 {
+    color: #5900ff;
 }
-a {
-    margin: 0 10px;
+
+nav a {
+    margin: 0 15px;
     text-decoration: none;
+    color: #5900ff;
 }
+
+nav a:hover {
+    text-decoration: underline;
+}
+
 .card {
-    border: 1px solid #cacaca;
+    background: #dadada;
+    border: 1px solid #742aff;
+    border-radius: 5px;
     padding: 10px;
     margin: 10px 0;
+    box-shadow: 0 2px 5px #5900ff(255, 255, 255, 0.1);
+}
+
+button {
+    padding: 10px 15px;
+    background-color: #dadada;
+    color: #5900ff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #4c00d8;
 }
